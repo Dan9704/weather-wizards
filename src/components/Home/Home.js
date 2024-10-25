@@ -3,7 +3,6 @@ import { Container, Row, Col } from "react-bootstrap";
 import homeLogo from "../../Assets/danny_picture.png";
 import Particle from "../Particle";
 // import Type from "./Type";
-import Tilt from "react-parallax-tilt";
 import WeatherCard from "./WeatherCard";
 
 function Home() {

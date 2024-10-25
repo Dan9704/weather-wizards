@@ -1,42 +1,47 @@
 import React, { useEffect, useState } from 'react';
-import Papa from 'papaparse';
-import WeatherCard from './WeatherCard';
+import Papa from 'papaparse';  // CSV parsing library
 
 const WeatherCard = () => {
   const [weatherData, setWeatherData] = useState([]);
 
   useEffect(() => {
-    // Retrieve CSV data from local storage
-    const storedCSVData = localStorage.getItem('weatherDataCSV');
+    // Fetch the CSV file from the public folder
+    const fetchData = async () => {
+      const response = await fetch('/weatherData.csv');  // Fetch the CSV file
+      const reader = response.body.getReader();
+      const result = await reader.read();
+      const decoder = new TextDecoder('utf-8');
+      const csvData = decoder.decode(result.value);  // Convert bytes to string
 
-    if (storedCSVData) {
-      // Parse the CSV data using Papa Parse
-      Papa.parse(storedCSVData, {
-        header: true,
-        skipEmptyLines: true,
-        complete: function (results) {
-          setWeatherData(results.data);  // Set the parsed data to state
+      // Parse the CSV data
+      Papa.parse(csvData, {
+        header: true,         // Use the first row as the header
+        skipEmptyLines: true, // Skip empty lines
+        complete: function(results) {
+          console.log('Parsed Data: ',results.data);  // Log parsed data for debugging
+          setWeatherData(results.data);  // Store parsed data in state
         },
       });
-    }
+    };
+
+    fetchData();  // Call the fetch function when the component loads
   }, []);
 
   return (
     <div className="weather-container">
       {weatherData.length > 0 ? (
         weatherData.map((weather, index) => (
-          <WeatherCard
-            key={index}
-            time={weather['time-local']}
-            maxTemp={weather['maximum_air_temperature']}
-            windSpeed={weather['wind_spd_kmh']}
-            windDir={weather['wind_dir']}
-            humidity={weather['rel-humidity']}
-            rainfall={weather['rainfall']}
-          />
+          <div className="weather-card" key={index}>
+            <h2>{weather['time-local']}</h2>
+            <p>Max Temperature: {weather['maximum_air_temperature']} °C</p>
+            <p>Wind Speed: {weather['wind_spd_kmh']} km/h</p>
+            <p>Wind Direction: {weather['wind_dir']}</p>
+            <p>Humidity: {weather['rel-humidity']} %</p>
+            <p>Rainfall: {weather['rainfall']} mm</p>
+          </div>
         ))
       ) : (
-        <p>No weather data available</p>
+        <p>Loading weather data...</p>
       )}
     </div>
   );
