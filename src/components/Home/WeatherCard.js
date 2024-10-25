@@ -7,7 +7,7 @@ const WeatherCard = () => {
   useEffect(() => {
     // Fetch the CSV file from the public folder
     const fetchData = async () => {
-      const response = await fetch('/weatherData.csv');  // Fetch the CSV file
+      const response = await fetch('/weatherDataCeberus.csv');  // Fetch the CSV file
       const reader = response.body.getReader();
       const result = await reader.read();
       const decoder = new TextDecoder('utf-8');
