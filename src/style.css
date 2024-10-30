@@ -676,3 +676,59 @@ button:focus {
   text-align: center;
 }
 
+/* ./components/Data_Visualization/DataVisualization.css */
+
+.charts-container {
+  display: flex;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Creates responsive columns */
+  gap: 20px;
+  padding: 60px 20px; /* Add top and bottom padding */
+}
+
+.chart-box {
+  height: 150px;
+  width: 150px;
+  overflow: hidden;
+  
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 2px solid #ddd;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+}
+
+.chart-box:hover {
+  grid-column: span 2; /* Take up more space horizontally when expanded */
+  height: 500px; /* Expanded height to show chart */
+  width: 1800px;;
+  overflow: visible;
+  padding: 20px;
+  z-index: 10;
+  border: none;
+}
+
+.chart-title {
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  color: #ffffff;
+}
+
+.chart-content {
+  display: none;
+}
+
+.chart-box:hover .chart-content {
+  display: block;
+}
+
+.chart-box:hover .chart-title {
+  display: none;
+}
+
+
