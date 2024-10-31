@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Papa from 'papaparse';
 
 const WeatherCard = () => {
   const [weatherData, setWeatherData] = useState([]);
@@ -10,52 +9,41 @@ const WeatherCard = () => {
   const [uniqueTimes, setUniqueTimes] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch('/weatherDataCeberus.csv');
-      const reader = response.body.getReader();
-      const result = await reader.read();
-      const decoder = new TextDecoder('utf-8');
-      const csvData = decoder.decode(result.value);
+    // Sample data for testing purposes
+    const sampleData = [
+      { "time-local": "2022-01-01T06:00:00", "maximum_air_temperature": "20", "wind_spd_kmh": "15", "wind_dir": "N", "rel-humidity": "60", "rainfall": "0" },
+      { "time-local": "2022-01-01T12:00:00", "maximum_air_temperature": "25", "wind_spd_kmh": "10", "wind_dir": "NE", "rel-humidity": "55", "rainfall": "0" },
+      { "time-local": "2022-01-01T18:00:00", "maximum_air_temperature": "18", "wind_spd_kmh": "5", "wind_dir": "NW", "rel-humidity": "70", "rainfall": "1" },
+      { "time-local": "2022-01-02T06:00:00", "maximum_air_temperature": "22", "wind_spd_kmh": "12", "wind_dir": "E", "rel-humidity": "65", "rainfall": "0" },
+      { "time-local": "2022-01-02T12:00:00", "maximum_air_temperature": "28", "wind_spd_kmh": "18", "wind_dir": "SE", "rel-humidity": "50", "rainfall": "0" }
+    ];
 
-      Papa.parse(csvData, {
-        header: true,
-        skipEmptyLines: true,
-        complete: function (results) {
-          setWeatherData(results.data);
-          if (results.data.length > 0) {
-            // Extract unique dates and times
-            const dates = [...new Set(results.data.map(item => item['time-local'].split('T')[0]))];
-            const times = [...new Set(results.data.map(item => item['time-local'].split('T')[1].split('+')[0]))];
-            console.log('Dates:', dates);
-            setUniqueDates(dates);
-            console.log('Times:', times);
-            setUniqueTimes(times);
+    // Set sample data directly
+    setWeatherData(sampleData);
 
-            // Set initial date and time based on first entry in dataset
-            const initialDate = results.data[0]['time-local'].split('T')[0];
-            const initialTime = results.data[0]['time-local'].split('T')[1].split('+')[0]; // Remove timezone offset
-            setSelectedDate(initialDate);
-            setSelectedTime(initialTime);
-            setFilteredData(results.data[0]);
-          }
-        },
-      });
-    };
+    // Extract unique dates and times
+    const dates = [...new Set(sampleData.map(item => item['time-local'].split('T')[0]))];
+    const times = [...new Set(sampleData.map(item => item['time-local'].split('T')[1]))];
+    setUniqueDates(dates);
+    setUniqueTimes(times);
 
-    fetchData();
+    // Set initial date and time based on the first entry in the sample dataset
+    const initialDate = sampleData[0]['time-local'].split('T')[0];
+    const initialTime = sampleData[0]['time-local'].split('T')[1];
+    setSelectedDate(initialDate);
+    setSelectedTime(initialTime);
+    setFilteredData(sampleData[0]);
   }, []);
 
   // Filter the data based on selected date and time
   const handleDateChange = (event) => {
     const date = event.target.value;
-    console.log('Selected Date:', date);
     setSelectedDate(date);
     updateFilteredData(date, selectedTime);
   };
 
   const handleTimeChange = (event) => {
     const time = event.target.value;
-    console.log('Selected Time:', time);
     setSelectedTime(time);
     updateFilteredData(selectedDate, time);
   };
@@ -63,11 +51,9 @@ const WeatherCard = () => {
   // Update the displayed data based on selected date and time
   const updateFilteredData = (date, time) => {
     const dateTime = `${date}T${time}`;
-    console.log('DateTime:', dateTime);
     const selectedData = weatherData.find(
       (data) => data['time-local'] === dateTime
     );
-    console.log('Selected Data:', selectedData);
     setFilteredData(selectedData);
   };
 
@@ -81,7 +67,7 @@ const WeatherCard = () => {
           <select
             value={selectedDate}
             onChange={handleDateChange}
-            style={{ zIndex: 1, position: 'relative' }} // Ensure input is clickable
+            style={{ zIndex: 1, position: 'relative' }}
           >
             {uniqueDates.map(date => (
               <option key={date} value={date}>{date}</option>
@@ -92,7 +78,7 @@ const WeatherCard = () => {
           <select
             value={selectedTime}
             onChange={handleTimeChange}
-            style={{ zIndex: 1, position: 'relative' }} // Ensure input is clickable
+            style={{ zIndex: 1, position: 'relative' }}
           >
             {uniqueTimes.map(time => (
               <option key={time} value={time}>{time}</option>
