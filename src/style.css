@@ -221,7 +221,8 @@ button:focus {
 
 .home-section {
   position: relative;
-  z-index: -1;
+  /* z-index must be 50, otherwise not work! */
+  z-index: 50;
   padding-bottom: 30px !important;
   padding-top: 30px !important;
   background-color: black !important;
