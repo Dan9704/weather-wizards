@@ -765,6 +765,7 @@ button:focus {
   text-align: center;
   color: #333;
   margin-top: 20px;
+  z-index: 10;
 }
 
 /* Date and time selection styling */

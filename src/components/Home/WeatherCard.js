@@ -6,9 +6,10 @@ const WeatherCard = () => {
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedTime, setSelectedTime] = useState('');
   const [filteredData, setFilteredData] = useState(null);
+  const [uniqueDates, setUniqueDates] = useState([]);
+  const [uniqueTimes, setUniqueTimes] = useState([]);
 
   useEffect(() => {
-    // Fetch the CSV file from the public folder
     const fetchData = async () => {
       const response = await fetch('/weatherDataCeberus.csv');
       const reader = response.body.getReader();
@@ -16,18 +17,25 @@ const WeatherCard = () => {
       const decoder = new TextDecoder('utf-8');
       const csvData = decoder.decode(result.value);
 
-      // Parse the CSV data
       Papa.parse(csvData, {
         header: true,
         skipEmptyLines: true,
         complete: function (results) {
           setWeatherData(results.data);
-          
-          // Set initial selected date and time based on the first entry
           if (results.data.length > 0) {
+            // Extract unique dates and times
+            const dates = [...new Set(results.data.map(item => item['time-local'].split('T')[0]))];
+            const times = [...new Set(results.data.map(item => item['time-local'].split('T')[1].split('+')[0]))];
+            console.log('Dates:', dates);
+            setUniqueDates(dates);
+            console.log('Times:', times);
+            setUniqueTimes(times);
+
+            // Set initial date and time based on first entry in dataset
             const initialDate = results.data[0]['time-local'].split('T')[0];
+            const initialTime = results.data[0]['time-local'].split('T')[1].split('+')[0]; // Remove timezone offset
             setSelectedDate(initialDate);
-            setSelectedTime(results.data[0]['time-local']);
+            setSelectedTime(initialTime);
             setFilteredData(results.data[0]);
           }
         },
@@ -37,39 +45,29 @@ const WeatherCard = () => {
     fetchData();
   }, []);
 
-  // Extract unique dates from weatherData
-  const uniqueDates = [...new Set(weatherData.map(data => data['time-local'].split('T')[0]))];
-
-  // Filter times based on the selected date
-  const timesForSelectedDate = weatherData
-    .filter(data => data['time-local'].startsWith(selectedDate))
-    .map(data => data['time-local']);
-
-  // Handle date selection change
+  // Filter the data based on selected date and time
   const handleDateChange = (event) => {
-    const selected = event.target.value;
-    setSelectedDate(selected);
-
-    // Automatically update the time dropdown to the first available time for the new date
-    const firstAvailableTime = timesForSelectedDate[0];
-    setSelectedTime(firstAvailableTime);
-
-    // Find and set the data for the selected time
-    const selectedData = weatherData.find(
-      (data) => data['time-local'] === firstAvailableTime
-    );
-    setFilteredData(selectedData);
+    const date = event.target.value;
+    console.log('Selected Date:', date);
+    setSelectedDate(date);
+    updateFilteredData(date, selectedTime);
   };
 
-  // Handle time selection change
   const handleTimeChange = (event) => {
-    const selected = event.target.value;
-    setSelectedTime(selected);
+    const time = event.target.value;
+    console.log('Selected Time:', time);
+    setSelectedTime(time);
+    updateFilteredData(selectedDate, time);
+  };
 
-    // Find and set the data for the selected time
+  // Update the displayed data based on selected date and time
+  const updateFilteredData = (date, time) => {
+    const dateTime = `${date}T${time}`;
+    console.log('DateTime:', dateTime);
     const selectedData = weatherData.find(
-      (data) => data['time-local'] === selected
+      (data) => data['time-local'] === dateTime
     );
+    console.log('Selected Data:', selectedData);
     setFilteredData(selectedData);
   };
 
@@ -77,26 +75,31 @@ const WeatherCard = () => {
     <div className="weather-container">
       {filteredData ? (
         <div className="weather-card">
-          {/* Date Selection */}
           <h2>Weather for:</h2>
-          <select onChange={handleDateChange} value={selectedDate}>
-            {uniqueDates.map((date, index) => (
-              <option key={index} value={date}>
-                {new Date(date).toLocaleDateString()}
-              </option>
+
+          {/* Date Select */}
+          <select
+            value={selectedDate}
+            onChange={handleDateChange}
+            style={{ zIndex: 1, position: 'relative' }} // Ensure input is clickable
+          >
+            {uniqueDates.map(date => (
+              <option key={date} value={date}>{date}</option>
             ))}
           </select>
 
-          {/* Time Selection */}
-          <select onChange={handleTimeChange} value={selectedTime}>
-            {timesForSelectedDate.map((time, index) => (
-              <option key={index} value={time}>
-                {new Date(time).toLocaleTimeString()}
-              </option>
+          {/* Time Select */}
+          <select
+            value={selectedTime}
+            onChange={handleTimeChange}
+            style={{ zIndex: 1, position: 'relative' }} // Ensure input is clickable
+          >
+            {uniqueTimes.map(time => (
+              <option key={time} value={time}>{time}</option>
             ))}
           </select>
 
-          {/* Display weather data for the selected time */}
+          {/* Display weather data for the selected date and time */}
           <div className="temperature">
             {filteredData['maximum_air_temperature']}°C
           </div>

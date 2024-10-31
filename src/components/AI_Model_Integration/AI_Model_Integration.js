@@ -7,7 +7,14 @@ function AI_Model_Intergration() {
     <Container fluid className="project-section">
       <Particle />
       <Container>
-        
+      <label>
+              Pick a fruit:
+              <select name="selectedFruit">
+                <option value="apple">Apple</option>
+                <option value="banana">Banana</option>
+                <option value="orange">Orange</option>
+              </select>
+            </label>
       </Container>
     </Container>
   );
