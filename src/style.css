@@ -221,8 +221,7 @@ button:focus {
 
 .home-section {
   position: relative;
-  /* z-index must be 50, otherwise not work! */
-  z-index: 50;
+  z-index: -1;
   padding-bottom: 30px !important;
   padding-top: 30px !important;
   background-color: black !important;
@@ -677,148 +676,91 @@ button:focus {
   text-align: center;
 }
 
-/* ./components/Data_Visualization/DataVisualization.css */
 
-.charts-container {
-  display: flex;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Creates responsive columns */
-  gap: 20px;
-  padding: 60px 20px; /* Add top and bottom padding */
-}
 
-.chart-box {
-  height: 150px;
-  width: 150px;
-  overflow: hidden;
-  
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border: 2px solid #ddd;
-  transition: all 0.3s ease;
-  cursor: pointer;
-  position: relative;
+/* AI_Model_Integration styling */
+
+.integration-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1;
+  min-height: 100vh;
+  padding-top: 60px; 
+  background-color: #1a1a2e;
 }
 
-.chart-box:hover {
-  grid-column: span 2; /* Take up more space horizontally when expanded */
-  height: 500px; /* Expanded height to show chart */
-  width: 1800px;;
-  overflow: visible;
+.integration-form {
+  background-color: #f0f0f0;
   padding: 20px;
-  z-index: 10;
-  border: none;
-}
-
-.chart-title {
-  font-size: 18px;
-  font-weight: bold;
-  text-align: center;
-  color: #ffffff;
-}
-
-.chart-content {
-  display: none;
-}
-
-.chart-box:hover .chart-content {
-  display: block;
-}
-
-.chart-box:hover .chart-title {
-  display: none;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* Center the weather container */
-
-/* Style for the weather container */
-.weather-container {
-  display: flex;
-  justify-content: center;
-  padding: 10px;
-  width: 100%;
-  margin-top: -70px;
-}
-
-/* Style for the main weather card */
-.weather-card {
-  background-color: #ffffff;
-  border-radius: 20px;
-  padding: 40px;
-  max-width: 900px; /* Increased width */
-  width: 100%;
-  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.15);
-  text-align: center;
-  color: #333;
-  margin-top: 20px;
-  z-index: 10;
-}
-
-/* Date and time selection styling */
-.weather-card h2 {
-  font-size: 24px; /* Larger font size */
-  color: #666;
-  margin-bottom: 20px;
-}
-
-/* Style the dropdown select for time */
-.weather-card select {
-  padding: 12px;
-  margin: 15px 0;
   border-radius: 8px;
-  border: 1px solid #ccc;
-  font-size: 18px; /* Increased font size for readability */
-  width: 85%; /* Make dropdown wider */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  width: 600px; 
+  max-width: 90%;
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr; 
+  gap: 15px;
+}
+
+.integration-form h2 {
+  text-align: center;
   color: #333;
 }
 
-/* Style for the temperature display */
-.temperature {
-  font-size: 86px; /* Larger font size for emphasis */
+.form-label {
   font-weight: bold;
-  color: #ff6b6b;
-  margin: 20px 0;
+  color: #333;
+  margin-bottom: 5px;
 }
 
-/* Weather details styling */
-.weather-details {
-  font-size: 50px; /* Larger font size for details */
-  color: #555;
+.form-input,
+.form-select {
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    width: 100%;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.full-width {
+  grid-column: span 2;
+}
+
+.dropdown-row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr; 
   gap: 15px;
-  justify-content: center;
+  width: 100%; 
 }
 
-.weather-details p {
-  margin: 10px 0;
+.submit-button {
+  padding: 10px;
+  border-radius: 4px;
+  background-color: #3f51b5;
+  color: #fff;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  grid-column: span 2; 
 }
 
+.error-message {
+  color: red;
+  text-align: center;
+  grid-column: span 2;
+}
 
-.weather-card select {
-  pointer-events: auto;
-}
-.weather-container {
-  overflow: visible; /* Allows the dropdown to display correctly */
-}
-.weather-container,
-.weather-card,
-select {
-  position: static;
-  overflow: visible;
+.prediction-result {
+  grid-column: span 2; 
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #3f51b5;
+  color: #fff;
+  border-radius: 4px;
+  text-align: center;
 }
