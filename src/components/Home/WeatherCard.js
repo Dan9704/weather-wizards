@@ -67,7 +67,7 @@ const WeatherCard = () => {
           <select
             value={selectedDate}
             onChange={handleDateChange}
-            style={{ zIndex: 1, position: 'relative' }}
+            style={{ zIndex: 100, position: 'relative' }}
           >
             {uniqueDates.map(date => (
               <option key={date} value={date}>{date}</option>
@@ -78,7 +78,7 @@ const WeatherCard = () => {
           <select
             value={selectedTime}
             onChange={handleTimeChange}
-            style={{ zIndex: 1, position: 'relative' }}
+            style={{ zIndex: 100, position: 'relative' }}
           >
             {uniqueTimes.map(time => (
               <option key={time} value={time}>{time}</option>
