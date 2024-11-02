@@ -1,104 +1,105 @@
 import React, { useEffect, useState } from 'react';
+import Papa from 'papaparse';
 
 const WeatherCard = () => {
   const [weatherData, setWeatherData] = useState([]);
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedTime, setSelectedTime] = useState('');
   const [filteredData, setFilteredData] = useState(null);
-  const [uniqueDates, setUniqueDates] = useState([]);
-  const [uniqueTimes, setUniqueTimes] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Sample data for testing purposes
-    const sampleData = [
-      { "time-local": "2022-01-01T06:00:00", "maximum_air_temperature": "20", "wind_spd_kmh": "15", "wind_dir": "N", "rel-humidity": "60", "rainfall": "0" },
-      { "time-local": "2022-01-01T12:00:00", "maximum_air_temperature": "25", "wind_spd_kmh": "10", "wind_dir": "NE", "rel-humidity": "55", "rainfall": "0" },
-      { "time-local": "2022-01-01T18:00:00", "maximum_air_temperature": "18", "wind_spd_kmh": "5", "wind_dir": "NW", "rel-humidity": "70", "rainfall": "1" },
-      { "time-local": "2022-01-02T06:00:00", "maximum_air_temperature": "22", "wind_spd_kmh": "12", "wind_dir": "E", "rel-humidity": "65", "rainfall": "0" },
-      { "time-local": "2022-01-02T12:00:00", "maximum_air_temperature": "28", "wind_spd_kmh": "18", "wind_dir": "SE", "rel-humidity": "50", "rainfall": "0" }
-    ];
+    const fetchData = async () => {
+      try {
+        const response = await fetch('/weatherDataCeberus.csv');
+        const reader = response.body.getReader();
+        const result = await reader.read();
+        const decoder = new TextDecoder('utf-8');
+        const csvData = decoder.decode(result.value);
 
-    // Set sample data directly
-    setWeatherData(sampleData);
+        Papa.parse(csvData, {
+          header: true,
+          skipEmptyLines: true,
+          complete: function (results) {
+            setWeatherData(results.data);
+            if (results.data.length > 0) {
+              // Initialize with the first entry in dataset
+              const initialDateTime = results.data[0]['time-local'];
+              const initialDate = initialDateTime.split('T')[0];
+              const initialTime = initialDateTime.split('T')[1].split('+')[0];
+              setSelectedDate(initialDate);
+              setSelectedTime(initialTime);
+              setFilteredData(results.data[0]);
+            }
+          },
+        });
+      } catch (error) {
+        setError("Failed to load CSV data");
+      }
+    };
 
-    // Extract unique dates and times
-    const dates = [...new Set(sampleData.map(item => item['time-local'].split('T')[0]))];
-    const times = [...new Set(sampleData.map(item => item['time-local'].split('T')[1]))];
-    setUniqueDates(dates);
-    setUniqueTimes(times);
-
-    // Set initial date and time based on the first entry in the sample dataset
-    const initialDate = sampleData[0]['time-local'].split('T')[0];
-    const initialTime = sampleData[0]['time-local'].split('T')[1];
-    setSelectedDate(initialDate);
-    setSelectedTime(initialTime);
-    setFilteredData(sampleData[0]);
+    fetchData();
   }, []);
 
-  // Filter the data based on selected date and time
-  const handleDateChange = (event) => {
-    const date = event.target.value;
-    setSelectedDate(date);
-    updateFilteredData(date, selectedTime);
-  };
+  const updateFilteredData = () => {
+    // Format the selected time to match the CSV format, ensuring seconds if needed
+    const formattedTime = selectedTime.length === 5 ? `${selectedTime}:00` : selectedTime; 
+    const dateTime = `${selectedDate}T${formattedTime}+11:00`;
 
-  const handleTimeChange = (event) => {
-    const time = event.target.value;
-    setSelectedTime(time);
-    updateFilteredData(selectedDate, time);
-  };
+    console.log('Trying to match dateTime:', dateTime);
 
-  // Update the displayed data based on selected date and time
-  const updateFilteredData = (date, time) => {
-    const dateTime = `${date}T${time}`;
     const selectedData = weatherData.find(
-      (data) => data['time-local'] === dateTime
+      (data) => data['time-local'].trim() === dateTime
     );
-    setFilteredData(selectedData);
+
+    if (selectedData) {
+      setFilteredData(selectedData);
+      setError(null);
+    } else {
+      setFilteredData(null);
+      setError("No data found for the selected date and time. Please select a valid entry.");
+    }
   };
 
   return (
     <div className="weather-container">
-      {filteredData ? (
-        <div className="weather-card">
-          <h2>Weather for:</h2>
+      <div className="weather-card">
+        <h2>Weather for:</h2>
 
-          {/* Date Select */}
-          <select
-            value={selectedDate}
-            onChange={handleDateChange}
-            style={{ zIndex: 100, position: 'relative' }}
-          >
-            {uniqueDates.map(date => (
-              <option key={date} value={date}>{date}</option>
-            ))}
-          </select>
+        {/* Date Input */}
+        <input
+          type="date"
+          value={selectedDate}
+          onChange={(e) => setSelectedDate(e.target.value)}
+        />
 
-          {/* Time Select */}
-          <select
-            value={selectedTime}
-            onChange={handleTimeChange}
-            style={{ zIndex: 100, position: 'relative' }}
-          >
-            {uniqueTimes.map(time => (
-              <option key={time} value={time}>{time}</option>
-            ))}
-          </select>
+        {/* Time Input */}
+        <input
+          type="time"
+          value={selectedTime}
+          onChange={(e) => setSelectedTime(e.target.value)}
+        />
 
-          {/* Display weather data for the selected date and time */}
-          <div className="temperature">
-            {filteredData['maximum_air_temperature']}°C
-          </div>
-          <div className="weather-details">
-            <p>🌬️ {filteredData['wind_spd_kmh']} km/h</p>
-            <p>🧭 {filteredData['wind_dir']}</p>
-            <p>💧 {filteredData['rel-humidity']} %</p>
-            <p>☔ {filteredData['rainfall']} mm</p>
-          </div>
-        </div>
-      ) : (
-        <p>Loading weather data...</p>
-      )}
+        <button onClick={updateFilteredData}>Load Weather Data</button>
+
+        {error ? (
+          <p style={{ color: 'red' }}>{error}</p>
+        ) : filteredData ? (
+          <>
+            <div className="temperature">
+              {filteredData['maximum_air_temperature']}°C
+            </div>
+            <div className="weather-details">
+              <p>🌬️ {filteredData['wind_spd_kmh']} km/h</p>
+              <p>🧭 {filteredData['wind_dir']}</p>
+              <p>💧 {filteredData['rel-humidity']} %</p>
+              <p>☔ {filteredData['rainfall']} mm</p>
+            </div>
+          </>
+        ) : (
+          <p>Loading weather data...</p>
+        )}
+      </div>
     </div>
   );
 };
