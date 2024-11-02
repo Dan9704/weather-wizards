@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import Particle from "../Particle";
+import { Container, Row, Col } from "react-bootstrap";
+
 
 const AI_Model_Integration = () => {
     const [inputData, setInputData] = useState({ rel_humidity: '', wind_spd: '', msl_pres: '', rainfall: '', air_temperature: '', dew_point: '' });
@@ -17,7 +20,7 @@ const AI_Model_Integration = () => {
     const handleLocationChange = (e) => setLocation(e.target.value);
 
     const handleSubmit = async (e) => {
-        e.preventDefault(); // Prevent page reload
+        e.preventDefault();
         setLoading(true);
         setError(null);
 
@@ -47,8 +50,11 @@ const AI_Model_Integration = () => {
     };
 
     return (
-        <div className="integration-container">
-            <form className="integration-form" onSubmit={handleSubmit}> {/* Use form tag here */}
+    <Container fluid className="home-section" id="home">
+    <Particle />
+    <Container className="home-content">
+        <div className="integration-container ai-model-integration-page"> {/* Added unique class here */}
+            <form className="integration-form" onSubmit={handleSubmit}>
                 <h2 className="form-label full-width">AI Model Integration - Prediction Box</h2>
                 
                 {model === "gradient_boost" ? (
@@ -96,7 +102,7 @@ const AI_Model_Integration = () => {
                     <div className="form-group">
                         <label className="form-label">Select Location:</label>
                         <select value={location} onChange={handleLocationChange} className="form-select">
-                            <option value="melbourne">Melbourne Olymipic Park</option>
+                            <option value="melbourne">Melbourne Olympic Park</option>
                             <option value="cerberus">Cerberus</option>
                         </select>
                     </div>
@@ -115,6 +121,8 @@ const AI_Model_Integration = () => {
                 )}
             </form>
         </div>
+    </Container>
+    </Container>
     );
 };
 

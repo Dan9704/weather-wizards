@@ -213,6 +213,7 @@ button:focus {
   /* background-size: cover !important; */
   width: 100%;
   height: 100%;
+  z-index: 0;
 }
 
 .home-header {
@@ -434,6 +435,7 @@ button:focus {
   background-image: var(--section-background-color) !important;
   color: white !important;
   background-color: black !important;
+
 }
 
 .tech-icons {
@@ -839,7 +841,8 @@ select {
   align-items: center;
   min-height: 100vh;
   padding-top: 60px; 
-  background-color: #1a1a2e;
+  z-index: 200; /* Ensures this is on top of the particles */
+
 }
 
 .integration-form {
@@ -918,6 +921,23 @@ select {
   text-align: center;
 }
 
+/* Styles for AI Model Integration */
+
+.integration-container {
+  position: relative;
+  z-index: 2; /* Ensures this is on top of the particles */
+}
+
+.particle-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1; /* Places this behind the form */
+}
+
+
 
 
 
@@ -969,3 +989,22 @@ select {
   background-color: #008bbf;
 }
 
+
+
+
+/* Styles for Data Visualization page */
+
+.visualization-container {
+  position: relative;
+  z-index: 2; /* Ensures this is on top of the particles */
+  padding: 20px;
+}
+
+.particle-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1; /* Places this behind the container */
+}

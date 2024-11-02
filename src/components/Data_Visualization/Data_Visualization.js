@@ -4,6 +4,8 @@ import LineChart from '../../LineChart';
 import WindSpeedBarChart from '../../WindSpeedBarChart';
 import WindDirectionPieChart from '../../WindDirectionPieChart';
 import HumidityRainfallStackedChart from '../../HumidityRainfallStackedChart';
+import Particle from '../Particle';
+import { Container, Row, Col } from "react-bootstrap";
 
 
 function Data_Visualization() {
@@ -26,40 +28,45 @@ function Data_Visualization() {
   const humidityData = data.map(entry => parseFloat(entry['rel-humidity']));
 
   return (
-    <div>
-      <h1>Weather Data Overview</h1>
-      <div className="charts-container">
-        <div className="chart-box">
-          <div className="chart-title">Max Temperature (°C)</div>
-          <div className="chart-content">
-            <LineChart data={maxTemps} labels={timestamps} title="Max Temperature (°C)" />
+    <Container fluid className="home-section" id="home">
+    <Particle />
+    <Container className="home-content">
+
+      <div className="visualization-container">
+        <h1>Weather Data Overview</h1>
+        <div className="charts-container">
+          <div className="chart-box">
+            <div className="chart-title">Max Temperature (°C)</div>
+            <div className="chart-content">
+              <LineChart data={maxTemps} labels={timestamps} title="Max Temperature (°C)" />
+            </div>
           </div>
-        </div>
-        <div className="chart-box">
-          <div className="chart-title">Wind Speed (km/h)</div>
-          <div className="chart-content">
-            <WindSpeedBarChart data={windSpeeds} labels={timestamps} title="Wind Speed (km/h)" />
+          <div className="chart-box">
+            <div className="chart-title">Wind Speed (km/h)</div>
+            <div className="chart-content">
+              <WindSpeedBarChart data={windSpeeds} labels={timestamps} title="Wind Speed (km/h)" />
+            </div>
           </div>
-        </div>
-        <div className="chart-box">
-          <div className="chart-title">Wind Direction Distribution</div>
-          <div className="chart-content">
-            <WindDirectionPieChart data={windDirections} title="Wind Direction Distribution" />
+          <div className="chart-box">
+            <div className="chart-title">Wind Direction Distribution</div>
+            <div className="chart-content">
+              <WindDirectionPieChart data={windDirections} title="Wind Direction Distribution" />
+            </div>
           </div>
-        </div>
-        <div className="chart-box">
-          <div className="chart-title">Humidity</div>
-          <div className="chart-content">
-            <HumidityRainfallStackedChart
-              humidityData={humidityData}
-              
-              labels={timestamps}
-              title="Humidity and Rainfall"
-            />
+          <div className="chart-box">
+            <div className="chart-title">Humidity</div>
+            <div className="chart-content">
+              <HumidityRainfallStackedChart
+                humidityData={humidityData}
+                labels={timestamps}
+                title="Humidity and Rainfall"
+              />
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </Container>
+  </Container>
   );
 }
 
