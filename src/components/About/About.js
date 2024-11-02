@@ -4,6 +4,12 @@ import Particle from "../Particle";
 import homeLogo from "../../Assets/danny_picture.png";
 import ren from "../../Assets/ren.jpg";
 import Tilt from "react-parallax-tilt";
+import {
+  AiFillGithub,
+  AiFillFacebook,
+  AiFillInstagram,
+} from "react-icons/ai";
+import { FaLinkedinIn } from "react-icons/fa";
 
 function About() {
   return (
@@ -30,6 +36,50 @@ function About() {
               Student ID:
               <strong className="main-name"> 104357292</strong>
             </h3>
+
+            {/* Social Media */}
+            <ul className="home-about-social-links">
+              <li className="social-icons">
+                <a
+                  href="https://github.com/Dan9704"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="icon-colour  home-social-icons"
+                >
+                  <AiFillGithub />
+                </a>
+              </li>
+              <li className="social-icons">
+                <a
+                  href="https://www.facebook.com/profile.php?id=100041760740329"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="icon-colour  home-social-icons"
+                >
+                  <AiFillFacebook />
+                </a>
+              </li>
+              <li className="social-icons">
+                <a
+                  href="https://www.linkedin.com/in/duong-danny-nguyen/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="icon-colour  home-social-icons"
+                >
+                  <FaLinkedinIn />
+                </a>
+              </li>
+              <li className="social-icons">
+                <a
+                  href="https://www.instagram.com/_tnug_dnoug_/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="icon-colour home-social-icons"
+                >
+                  <AiFillInstagram />
+                </a>
+              </li>
+            </ul>
           </Col>
 
           <Col md={5} style={{ paddingBottom: 20 }}>
@@ -42,7 +92,9 @@ function About() {
               />
             </Tilt>
           </Col>
+          
         </Row>
+
         {/* ---------------------------------------------- */}
         {/* ------------------Ren---------------------------- */}
         {/* ---------------------------------------------- */}
@@ -61,6 +113,50 @@ function About() {
               Student ID:
               <strong className="main-name"> 104313715 </strong>
             </h3>
+
+            {/* Social Media */}
+            <ul className="home-about-social-links">
+              <li className="social-icons">
+                <a
+                  href="https://github.com/Dan9704"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="icon-colour  home-social-icons"
+                >
+                  <AiFillGithub />
+                </a>
+              </li>
+              <li className="social-icons">
+                <a
+                  href="https://www.facebook.com/profile.php?id=100041760740329"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="icon-colour  home-social-icons"
+                >
+                  <AiFillFacebook />
+                </a>
+              </li>
+              <li className="social-icons">
+                <a
+                  href="https://www.linkedin.com/in/duong-danny-nguyen/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="icon-colour  home-social-icons"
+                >
+                  <FaLinkedinIn />
+                </a>
+              </li>
+              <li className="social-icons">
+                <a
+                  href="https://www.instagram.com/_tnug_dnoug_/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="icon-colour home-social-icons"
+                >
+                  <AiFillInstagram />
+                </a>
+              </li>
+            </ul>
           </Col>
 
           <Col md={5} style={{ paddingBottom: 20 }}>
@@ -75,7 +171,7 @@ function About() {
           </Col>
         </Row>
         {/* ---------------------------------------------- */}
-        {/* ------------------Ren---------------------------- */}
+        {/* ------------------Lehan---------------------------- */}
         {/* ---------------------------------------------- */}
         <Row>
           <Col md={7} className="home-header">
@@ -92,6 +188,50 @@ function About() {
               Student ID:
               <strong className="main-name"> 104855055</strong>
             </h3>
+
+            {/* Social Media */}
+            <ul className="home-about-social-links">
+              <li className="social-icons">
+                <a
+                  href="https://github.com/Dan9704"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="icon-colour  home-social-icons"
+                >
+                  <AiFillGithub />
+                </a>
+              </li>
+              <li className="social-icons">
+                <a
+                  href="https://www.facebook.com/profile.php?id=100041760740329"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="icon-colour  home-social-icons"
+                >
+                  <AiFillFacebook />
+                </a>
+              </li>
+              <li className="social-icons">
+                <a
+                  href="https://www.linkedin.com/in/duong-danny-nguyen/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="icon-colour  home-social-icons"
+                >
+                  <FaLinkedinIn />
+                </a>
+              </li>
+              <li className="social-icons">
+                <a
+                  href="https://www.instagram.com/_tnug_dnoug_/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="icon-colour home-social-icons"
+                >
+                  <AiFillInstagram />
+                </a>
+              </li>
+            </ul>
           </Col>
 
           <Col md={5} style={{ paddingBottom: 20 }}>
