@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import Papa from 'papaparse';
 
-const WeatherCard = () => {
+const WeatherCard = ({ onTemperatureChange }) => {
   const [weatherData, setWeatherData] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState('Cerberus');
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedTime, setSelectedTime] = useState('');
   const [filteredData, setFilteredData] = useState(null);
   const [error, setError] = useState(null);
+
+  const [roundedTemperature, setRoundedTemperature] = useState(null);
+
 
   // Fetch data when location or date changes
   useEffect(() => {
@@ -61,6 +64,9 @@ const WeatherCard = () => {
     );
 
     if (selectedData) {
+      const temperature = Math.round(parseFloat(selectedData['maximum_air_temperature']));
+      setRoundedTemperature(temperature); // Store the rounded temperature
+      onTemperatureChange(temperature); // Pass the temperature to Home.js
       console.log("Matched Data:", selectedData);
       setFilteredData(selectedData);
       setError(null);
