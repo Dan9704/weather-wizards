@@ -101,7 +101,17 @@ function NavBar() {
                 <CgFileDocument style={{ marginBottom: "2px" }} /> Data Visualization
               </Nav.Link>
             </Nav.Item>
-
+            
+            {/* Github Button/Link */}
+            <Nav.Item className="github-btn">
+              <Button
+                href="https://github.com/Dan9704/weather-wizards"
+                target="_blank"
+                className="github-btn-inner"
+              >
+                <AiFillGithub style={{ fontSize: "1.2em" }} />{" "}
+              </Button>
+            </Nav.Item>
           </Nav>
         </Navbar.Collapse>
       </Container>
