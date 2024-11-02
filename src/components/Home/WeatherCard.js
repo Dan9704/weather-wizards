@@ -3,15 +3,29 @@ import Papa from 'papaparse';
 
 const WeatherCard = () => {
   const [weatherData, setWeatherData] = useState([]);
+  const [selectedLocation, setSelectedLocation] = useState('Cerberus');
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedTime, setSelectedTime] = useState('');
   const [filteredData, setFilteredData] = useState(null);
   const [error, setError] = useState(null);
 
+  // Fetch data when location or date changes
   useEffect(() => {
     const fetchData = async () => {
+      const fileName =
+        selectedLocation === 'Cerberus'
+          ? 'weatherDataCeberus.csv'
+          : 'weatherDataMelbourneOlympicPark.csv';
+
+      console.log(`Fetching file: ${fileName}`);
+      
       try {
-        const response = await fetch('/weatherDataCeberus.csv');
+        const response = await fetch(`/${fileName}`);
+        
+        if (!response.ok) {
+          throw new Error(`Failed to fetch CSV file: ${response.statusText}`);
+        }
+
         const reader = response.body.getReader();
         const result = await reader.read();
         const decoder = new TextDecoder('utf-8');
@@ -20,42 +34,38 @@ const WeatherCard = () => {
         Papa.parse(csvData, {
           header: true,
           skipEmptyLines: true,
-          complete: function (results) {
+          complete: (results) => {
+            console.log("Parsed CSV Data:", results.data);
             setWeatherData(results.data);
-            if (results.data.length > 0) {
-              // Initialize with the first entry in dataset
-              const initialDateTime = results.data[0]['time-local'];
-              const initialDate = initialDateTime.split('T')[0];
-              const initialTime = initialDateTime.split('T')[1].split('+')[0];
-              setSelectedDate(initialDate);
-              setSelectedTime(initialTime);
-              setFilteredData(results.data[0]);
-            }
+            setFilteredData(null); // Reset filtered data on new load
+            setError(null);
           },
         });
       } catch (error) {
+        console.error("Fetch error:", error);
         setError("Failed to load CSV data");
       }
     };
 
     fetchData();
-  }, []);
+  }, [selectedLocation, selectedDate]);
 
   const updateFilteredData = () => {
-    // Format the selected time to match the CSV format, ensuring seconds if needed
-    const formattedTime = selectedTime.length === 5 ? `${selectedTime}:00` : selectedTime; 
+    const formattedTime = selectedTime.length === 5 ? `${selectedTime}:00` : selectedTime;
     const dateTime = `${selectedDate}T${formattedTime}+11:00`;
 
     console.log('Trying to match dateTime:', dateTime);
 
     const selectedData = weatherData.find(
-      (data) => data['time-local'].trim() === dateTime
+      (data) => data['time-local'] && data['time-local'].trim() === dateTime
     );
 
     if (selectedData) {
+      console.log("Matched Data:", selectedData);
       setFilteredData(selectedData);
       setError(null);
     } else {
+      console.log("No data matched for dateTime:", dateTime);
       setFilteredData(null);
       setError("No data found for the selected date and time. Please select a valid entry.");
     }
@@ -65,6 +75,15 @@ const WeatherCard = () => {
     <div className="weather-container">
       <div className="weather-card">
         <h2>Weather for:</h2>
+
+        {/* Location Selector */}
+        <select
+          value={selectedLocation}
+          onChange={(e) => setSelectedLocation(e.target.value)}
+        >
+          <option value="Cerberus">Cerberus</option>
+          <option value="Melbourne Olympic Park">Melbourne Olympic Park</option>
+        </select>
 
         {/* Date Input */}
         <input
