@@ -2,8 +2,8 @@ import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import Particle from "../Particle";
 // import Type from "./Type";
-import WeatherCard from "./WeatherCard";
 import FruitPicker from "./WeatherCard";
+import ClimateCard from "./ClimateCard";
 
 function Home() {
   return (
@@ -13,6 +13,8 @@ function Home() {
         <Container className="home-content">
           {/* <WeatherCard /> */}
           <FruitPicker />
+          <h1>Climate Change Agriculture Data</h1>
+          <ClimateCard />
         </Container>
       </Container>
     </section>
