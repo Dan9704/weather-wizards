@@ -12,8 +12,14 @@ function Home() {
         <Particle />
         <Container className="home-content">
           {/* <WeatherCard /> */}
+          <h1 className="heading-name">
+              Weather Data of 
+              <strong className="main-name"> Cerberus</strong> and <strong className="main-name">Melbourne Olympic Park</strong>
+          </h1>
           <FruitPicker />
-          <h1>Climate Change Agriculture Data</h1>
+          <h1 className="heading-name">
+              <strong className="main-name"> Climate Change</strong> on <strong className="main-name">Agriculture</strong> Data
+          </h1>
           <ClimateCard />
         </Container>
       </Container>
