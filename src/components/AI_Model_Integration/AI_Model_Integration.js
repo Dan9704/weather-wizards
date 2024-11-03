@@ -3,7 +3,6 @@ import axios from 'axios';
 import Particle from "../Particle";
 import { Container, Row, Col } from "react-bootstrap";
 
-
 const AI_Model_Integration = () => {
     const [inputData, setInputData] = useState({ rel_humidity: '', wind_spd: '', msl_pres: '', rainfall: '', air_temperature: '', dew_point: '' });
     const [model, setModel] = useState("gradient_boost");
@@ -51,77 +50,77 @@ const AI_Model_Integration = () => {
 
     return (
     <Container fluid className="home-section" id="home">
-    <Particle />
-    <Container className="home-content">
-        <div className="integration-container ai-model-integration-page"> {/* Added unique class here */}
-            <form className="integration-form" onSubmit={handleSubmit}>
-                <h2 className="form-label full-width">AI Model Integration - Prediction Box</h2>
-                
-                {model === "gradient_boost" ? (
-                    <>
-                        <div className="form-group">
-                            <label className="form-label">Air Temperature:</label>
-                            <input name="air_temperature" value={inputData.air_temperature} onChange={handleChange} className="form-input" />
+        <Particle />
+        <Container className="home-content">
+            <div className="integration-container ai-model-integration-page">
+                <form className="integration-form" onSubmit={handleSubmit}>
+                    <h2 className="form-label full-width">AI Model Integration - Prediction Box</h2>
+                    
+                    {model === "gradient_boost" ? (
+                        <>
+                            <div className="form-group">
+                                <label className="form-label">Air Temperature:</label>
+                                <input name="air_temperature" value={inputData.air_temperature} onChange={handleChange} className="form-input" />
+                            </div>
+                            <div className="form-group">
+                                <label className="form-label">Dew Point:</label>
+                                <input name="dew_point" value={inputData.dew_point} onChange={handleChange} className="form-input" />
+                            </div>
+                        </>
+                    ) : (
+                        <div className="form-group full-width">
+                            <label className="form-label">Relative Humidity:</label>
+                            <input name="rel_humidity" value={inputData.rel_humidity} onChange={handleChange} className="form-input" />
                         </div>
-                        <div className="form-group">
-                            <label className="form-label">Dew Point:</label>
-                            <input name="dew_point" value={inputData.dew_point} onChange={handleChange} className="form-input" />
-                        </div>
-                    </>
-                ) : (
-                    <div className="form-group full-width">
-                        <label className="form-label">Relative Humidity:</label>
-                        <input name="rel_humidity" value={inputData.rel_humidity} onChange={handleChange} className="form-input" />
-                    </div>
-                )}
-
-                <div className="form-group">
-                    <label className="form-label">Wind Speed:</label>
-                    <input name="wind_spd" value={inputData.wind_spd} onChange={handleChange} className="form-input" />
-                </div>
-                
-                <div className="form-group">
-                    <label className="form-label">MSL Pressure:</label>
-                    <input name="msl_pres" value={inputData.msl_pres} onChange={handleChange} className="form-input" />
-                </div>
-                
-                <div className="form-group">
-                    <label className="form-label">Rainfall:</label>
-                    <input name="rainfall" value={inputData.rainfall} onChange={handleChange} className="form-input" />
-                </div>
-
-                <div className="dropdown-row full-width">
-                    <div className="form-group">
-                        <label className="form-label">Required Prediction:</label>
-                        <select value={model} onChange={handleModelChange} className="form-select">
-                            <option value="gradient_boost">Humidity (Gradient Boosting)</option>
-                            <option value="linear_regr">Temperature (Linear Regression)</option>
-                        </select>
-                    </div>
+                    )}
 
                     <div className="form-group">
-                        <label className="form-label">Select Location:</label>
-                        <select value={location} onChange={handleLocationChange} className="form-select">
-                            <option value="melbourne">Melbourne Olympic Park</option>
-                            <option value="cerberus">Cerberus</option>
-                        </select>
+                        <label className="form-label">Wind Speed:</label>
+                        <input name="wind_spd" value={inputData.wind_spd} onChange={handleChange} className="form-input" />
                     </div>
-                </div>
-
-                <button type="submit" disabled={loading} className="submit-button">
-                    {loading ? 'Loading...' : 'Get Prediction'}
-                </button>
-
-                {error && <p className="error-message">{error}</p>}
-                {prediction !== null && (
-                    <div className="prediction-result">
-                        <h3>Prediction Result</h3>
-                        <p>Prediction: {prediction}</p>
+                    
+                    <div className="form-group">
+                        <label className="form-label">MSL Pressure:</label>
+                        <input name="msl_pres" value={inputData.msl_pres} onChange={handleChange} className="form-input" />
                     </div>
-                )}
-            </form>
-        </div>
-    </Container>
+                    
+                    <div className="form-group">
+                        <label className="form-label">Rainfall:</label>
+                        <input name="rainfall" value={inputData.rainfall} onChange={handleChange} className="form-input" />
+                    </div>
+
+                    <div className="dropdown-row full-width">
+                        <div className="form-group">
+                            <label className="form-label">Required Prediction:</label>
+                            <select value={model} onChange={handleModelChange} className="form-select">
+                                <option value="gradient_boost">Humidity (Gradient Boosting)</option>
+                                <option value="linear_regr">Temperature (Linear Regression)</option>
+                            </select>
+                        </div>
+
+                        <div className="form-group">
+                            <label className="form-label">Select Location:</label>
+                            <select value={location} onChange={handleLocationChange} className="form-select">
+                                <option value="melbourne">Melbourne Olympic Park</option>
+                                <option value="cerberus">Cerberus</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button type="submit" disabled={loading} className="submit-button">
+                        {loading ? 'Loading...' : 'Get Prediction'}
+                    </button>
+
+                    {error && <p className="error-message">{error}</p>}
+                    {prediction !== null && (
+                        <div className="prediction-result">
+                            <h3>Prediction Result</h3>
+                            <p>{model === "gradient_boost" ? `Humidity: ${prediction} %` : `Temperature: ${prediction} °C`}</p>
+                        </div>
+                    )}
+                </form>
+            </div>
+        </Container>
     </Container>
     );
 };
