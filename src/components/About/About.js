@@ -3,6 +3,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import Particle from "../Particle";
 import homeLogo from "../../Assets/danny_picture.png";
 import ren from "../../Assets/ren.jpg";
+import lehan from "../../Assets/lehan.png";
 import Tilt from "react-parallax-tilt";
 import {
   AiFillGithub,
@@ -263,7 +264,7 @@ function About() {
           <Col md={5} style={{ paddingBottom: 20 }}>
             <Tilt>
               <img
-                src={homeLogo}
+                src={lehan}
                 alt="home pic"
                 className="img-fluid"
                 style={{ maxHeight: "450px" }}
