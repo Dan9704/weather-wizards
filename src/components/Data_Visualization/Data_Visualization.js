@@ -36,7 +36,7 @@ function Data_Visualization() {
 
   // Weather data processing
   const timestamps = weatherData.map(entry => entry['time-local']);
-  const maxTemps = weatherData.map(entry => parseFloat(entry['maximum_air_temperature']));
+  const maxTemps = weatherData.map(entry => parseFloat(entry['air_temperature']));
   const windSpeeds = weatherData.map(entry => parseFloat(entry['wind_spd_kmh']));
   const windDirections = weatherData.map(entry => entry['wind_dir']);
   const humidityData = weatherData.map(entry => parseFloat(entry['rel-humidity']));
@@ -61,7 +61,7 @@ function Data_Visualization() {
           <div className="charts-container">
             <h2 className="section-title">Weather Data Analysis</h2>
             <div className="chart-box">
-              <div className="chart-title">Max Temperature (°C)</div>
+              <div className="chart-title">Temperature (°C)</div>
               <div className="chart-content">
                 <LineChart data={maxTemps} labels={timestamps} title="Max Temperature (°C)" />
               </div>
