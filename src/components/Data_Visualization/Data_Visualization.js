@@ -1,3 +1,5 @@
+// src/components/Data_Visualization.js
+
 import React, { useState, useEffect } from 'react';
 import * as d3 from 'd3-fetch';
 import LineChart from '../../LineChart';
@@ -5,8 +7,10 @@ import WindSpeedBarChart from '../../WindSpeedBarChart';
 import WindDirectionPieChart from '../../WindDirectionPieChart';
 import HumidityRainfallStackedChart from '../../HumidityRainfallStackedChart';
 import Particle from '../Particle';
-import { Container, Row, Col } from "react-bootstrap";
-import CropYieldLineChart from '../../CropYieldLineChart';
+import { Container } from "react-bootstrap";
+import TempCrop from '../../TempCrop';
+
+
 import EconomicImpactBarChart from '../../EconomicImpactBarChart';
 
 function Data_Visualization() {
@@ -90,9 +94,9 @@ function Data_Visualization() {
           <div className="charts-container">
             <h2 className="section-title">Climate Change and Agriculture Data Analysis</h2>
             <div className="chart-box">
-              <div className="chart-title">Crop Yield Over Time</div>
+              <div className="chart-title">Precipitation by Temperature</div>
               <div className="chart-content">
-                <CropYieldLineChart data={cropYield} labels={temperature} title="Crop Yield Over Time (vs. Temperature)" />
+                <TempCrop data={cropYield} labels={temperature} title="Crop Yield Over Time (vs. Temperature)" />
               </div>
             </div>
             <div className="chart-box">
