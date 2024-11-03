@@ -1,55 +1,59 @@
-// src/components/Data_Visualization.js
-
+// Importing necessary libraries and components
 import React, { useState, useEffect } from 'react';
-import * as d3 from 'd3-fetch';
-import LineChart from '../../LineChart';
-import WindSpeedBarChart from '../../WindSpeedBarChart';
-import WindDirectionPieChart from '../../WindDirectionPieChart';
-import HumidityRainfallStackedChart from '../../HumidityRainfallStackedChart';
-import Particle from '../Particle';
-import { Container } from "react-bootstrap";
-import TempCrop from '../../TempCrop';
+import * as d3 from 'd3-fetch'; // Library for fetching and parsing CSV data
+import LineChart from '../../LineChart'; // Line chart component for temperature
+import WindSpeedBarChart from '../../WindSpeedBarChart'; // Bar chart component for wind speed
+import WindDirectionPieChart from '../../WindDirectionPieChart'; // Pie chart for wind direction distribution
+import HumidityRainfallStackedChart from '../../HumidityRainfallStackedChart'; // Stacked chart for humidity and rainfall
+import Particle from '../Particle'; // Particle effect component for background visuals
+import { Container } from "react-bootstrap"; // Bootstrap container for layout
+import TempCrop from '../../TempCrop'; // Chart component for crop yield vs. temperature
+import EconomicImpactBarChart from '../../EconomicImpactBarChart'; // Bar chart for economic impact by precipitation
 
-
-import EconomicImpactBarChart from '../../EconomicImpactBarChart';
-
+// Main Data_Visualization component function
 function Data_Visualization() {
+  // State to store weather data from CSV files
   const [weatherData, setWeatherData] = useState([]);
+  // State to store climate data related to agriculture and climate change
   const [climateData, setClimateData] = useState([]);
 
+  // useEffect to fetch and set weather and climate data from CSV files
   useEffect(() => {
+    // Function to fetch and parse weather data CSV files
     async function fetchWeatherData() {
       const melbourneData = await d3.csv('/weatherDataMelbourneOlympicPark1.csv');
       const ceberusData = await d3.csv('/weatherDataCeberus1.csv');
-      setWeatherData([...melbourneData, ...ceberusData]);
+      setWeatherData([...melbourneData, ...ceberusData]); // Combine and set both datasets
     }
 
+    // Function to fetch and parse climate change data CSV file
     async function fetchClimateData() {
       const climateChangeData = await d3.csv('/climate_change_agriculture_dataset.csv');
-      console.log(climateChangeData);  // Log data to check
-      setClimateData(climateChangeData);
+      console.log(climateChangeData);  // Log data to verify content
+      setClimateData(climateChangeData); // Set the parsed data to state
     }
 
+    // Fetch data when component mounts
     fetchWeatherData();
     fetchClimateData();
   }, []);
 
-  // Weather data processing
-  const timestamps = weatherData.map(entry => entry['time-local']);
-  const maxTemps = weatherData.map(entry => parseFloat(entry['air_temperature']));
-  const windSpeeds = weatherData.map(entry => parseFloat(entry['wind_spd_kmh']));
-  const windDirections = weatherData.map(entry => entry['wind_dir']);
-  const humidityData = weatherData.map(entry => parseFloat(entry['rel-humidity']));
+  // Extracting specific fields for weather data visualization
+  const timestamps = weatherData.map(entry => entry['time-local']); // Timestamps
+  const maxTemps = weatherData.map(entry => parseFloat(entry['air_temperature'])); // Max temperatures
+  const windSpeeds = weatherData.map(entry => parseFloat(entry['wind_spd_kmh'])); // Wind speeds
+  const windDirections = weatherData.map(entry => entry['wind_dir']); // Wind directions
+  const humidityData = weatherData.map(entry => parseFloat(entry['rel-humidity'])); // Humidity data
 
-  // Climate change data processing
-  const cropYield = climateData.map(entry => parseFloat(entry['Crop Yield']));
-  const economicImpact = climateData.map(entry => entry['Economic Impact']);
-  const temperature = climateData.map(entry => parseFloat(entry['Temperature']));
-  const precipitation = climateData.map(entry => parseFloat(entry['Precipitation']));
+  // Extracting specific fields for climate change data visualization
+  const cropYield = climateData.map(entry => parseFloat(entry['Crop Yield'])); // Crop yield data
+  const economicImpact = climateData.map(entry => entry['Economic Impact']); // Economic impact data
+  const temperature = climateData.map(entry => parseFloat(entry['Temperature'])); // Temperature data for climate
+  const precipitation = climateData.map(entry => parseFloat(entry['Precipitation'])); // Precipitation data
 
   return (
     <Container fluid className="home-section" id="home">
-      <Particle />
+      <Particle /> {/* Background particle effect */}
       <Container className="home-content">
 
         <div className="visualization-container">
