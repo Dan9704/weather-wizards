@@ -14,9 +14,35 @@ import { FaLinkedinIn } from "react-icons/fa";
 function About() {
   return (
     <Container fluid className="about-section">
-      {/* Particle background effect  */}
+      {/* Particle background effect */}
       <Particle />
       <Container>
+
+        {/* Project Mission and Technology Stack */}
+        <Row className="mission-section">
+          <Col md={12} className="home-header text-center">
+            <h1 className="heading">
+              About <strong className="main-name">Weather Wizard</strong>
+            </h1>
+            <p>
+              <strong className="green">Project Mission:</strong> Our AI-Powered Climate and Weather Data Analysis Platform aims to provide users with real-time, accurate climate predictions, empowering them to make informed decisions based on accessible weather data.
+            </p>
+            <p>
+              <strong className="green">Technology Stack:</strong> This platform is built using a modern tech stack:
+              <ul>
+                <li><strong className="green">Front-End:</strong> React.js for a dynamic and responsive user interface.</li>
+                <li><strong className="green">Back-End:</strong> FastAPI, chosen for its speed and efficiency in handling real-time requests.</li>
+                <li><strong className="green">Machine Learning:</strong> Gradient Boosting and Linear Regression models for predicting humidity and temperature based on historical climate data.</li>
+              </ul>
+            </p>
+          </Col>
+        </Row>
+
+        <Row>
+          <h1 className="heading">
+                Our <strong className="main-name">Teammates:</strong>
+          </h1>
+        </Row>
         {/* ---------------------------------------------- */}
         {/* ------------------Danny---------------------------- */}
         {/* ---------------------------------------------- */}
@@ -44,7 +70,7 @@ function About() {
                   href="https://github.com/Dan9704"
                   target="_blank"
                   rel="noreferrer"
-                  className="icon-colour  home-social-icons"
+                  className="icon-colour home-social-icons"
                 >
                   <AiFillGithub />
                 </a>
@@ -54,7 +80,7 @@ function About() {
                   href="https://www.facebook.com/profile.php?id=100041760740329"
                   target="_blank"
                   rel="noreferrer"
-                  className="icon-colour  home-social-icons"
+                  className="icon-colour home-social-icons"
                 >
                   <AiFillFacebook />
                 </a>
@@ -64,7 +90,7 @@ function About() {
                   href="https://www.linkedin.com/in/duong-danny-nguyen/"
                   target="_blank"
                   rel="noreferrer"
-                  className="icon-colour  home-social-icons"
+                  className="icon-colour home-social-icons"
                 >
                   <FaLinkedinIn />
                 </a>
@@ -92,7 +118,6 @@ function About() {
               />
             </Tilt>
           </Col>
-          
         </Row>
 
         {/* ---------------------------------------------- */}
@@ -121,7 +146,7 @@ function About() {
                   href="https://github.com/Dan9704"
                   target="_blank"
                   rel="noreferrer"
-                  className="icon-colour  home-social-icons"
+                  className="icon-colour home-social-icons"
                 >
                   <AiFillGithub />
                 </a>
@@ -131,7 +156,7 @@ function About() {
                   href="https://www.facebook.com/profile.php?id=100041760740329"
                   target="_blank"
                   rel="noreferrer"
-                  className="icon-colour  home-social-icons"
+                  className="icon-colour home-social-icons"
                 >
                   <AiFillFacebook />
                 </a>
@@ -141,7 +166,7 @@ function About() {
                   href="https://www.linkedin.com/in/duong-danny-nguyen/"
                   target="_blank"
                   rel="noreferrer"
-                  className="icon-colour  home-social-icons"
+                  className="icon-colour home-social-icons"
                 >
                   <FaLinkedinIn />
                 </a>
@@ -170,6 +195,7 @@ function About() {
             </Tilt>
           </Col>
         </Row>
+
         {/* ---------------------------------------------- */}
         {/* ------------------Lehan---------------------------- */}
         {/* ---------------------------------------------- */}
@@ -196,7 +222,7 @@ function About() {
                   href="https://github.com/Dan9704"
                   target="_blank"
                   rel="noreferrer"
-                  className="icon-colour  home-social-icons"
+                  className="icon-colour home-social-icons"
                 >
                   <AiFillGithub />
                 </a>
@@ -206,7 +232,7 @@ function About() {
                   href="https://www.facebook.com/profile.php?id=100041760740329"
                   target="_blank"
                   rel="noreferrer"
-                  className="icon-colour  home-social-icons"
+                  className="icon-colour home-social-icons"
                 >
                   <AiFillFacebook />
                 </a>
@@ -216,7 +242,7 @@ function About() {
                   href="https://www.linkedin.com/in/duong-danny-nguyen/"
                   target="_blank"
                   rel="noreferrer"
-                  className="icon-colour  home-social-icons"
+                  className="icon-colour home-social-icons"
                 >
                   <FaLinkedinIn />
                 </a>
